@@ -9,7 +9,7 @@ public:
   char *strToCharArray(String data);
   String getMACAddress();
   String getTopicWithMAC(String topic_name);
-  String randomString(String append_after);
+  String randomString(int len);
   Utils();
 
 private:
@@ -59,18 +59,16 @@ String Utils::getTopicWithMAC(String topic_name)
   return t;
 }
 
-String Utils::randomString(String append_after)
+String Utils::randomString(int len)
 {
 
   char *letters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
   String v = "";
-  for (uint8_t i = 0; i < 30; i++)
+  for (uint8_t i = 0; i < len; i++)
   {
-    uint8_t randomValue = random(0, 37);
+    uint8_t randomValue = random(0, len);
     v = v + String(letters[randomValue]);
   }
-  v = v + append_after;
-  // Serial.println(v);
   return v;
 }

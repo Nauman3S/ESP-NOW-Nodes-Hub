@@ -9,8 +9,8 @@ Utils utils;
 typedef struct struct_message
 {
   String macStr;
-  int x;
-  int y;
+  int generatedValue;
+  String uniqueID;
 } struct_message;
 
 // Create a struct_message called myData
@@ -35,8 +35,8 @@ void OnDataRecv(const uint8_t *mac_addr, const uint8_t *incomingData, int len)
   memcpy(&myData, incomingData, sizeof(myData));
   Serial.print("incomming data: ");
   Serial.println(myData.macStr);
-  Serial.println(myData.x);
-  Serial.println(myData.y);
+  Serial.println(myData.generatedValue);
+  Serial.println(myData.uniqueID);
 
   Serial.println();
 }

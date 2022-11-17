@@ -7,13 +7,13 @@
 Utils utils;
 // REPLACE WITH THE RECEIVER'S MAC Address
 uint8_t broadcastAddress[] = {0x24, 0x0A, 0xC4, 0xAF, 0xDB, 0x9C};
-
+long misses=0;
 // Structure example to send data
 // Must match the receiver structure
 typedef struct struct_message {
     String macStr; // must be unique for each sender board
-    int x;
-    int y;
+    int generatedValue;
+    String uniqueID;
 } struct_message;
 
 // Create a struct_message called myData
@@ -60,8 +60,8 @@ void setup() {
 void loop() {
   // Set values to send
   myData.macStr = utils.getMACAddress();
-  myData.x = random(1,40);
-  myData.y = random(1,40);
+  myData.generatedValue = random(1,40);
+  myData.uniqueID = utils.randomString(6);
 
   // Send message via ESP-NOW
   esp_err_t result = esp_now_send(broadcastAddress, (uint8_t *) &myData, sizeof(myData));
@@ -69,7 +69,18 @@ void loop() {
   if (result == ESP_OK) {
     Serial.println("Sent with success");
   }
-  else {
+ 
+
+  if(result==ESP_NOW_SEND_SUCCESS){
+    Serial.println("ACK Received");
+  }
+  else if(result==ESP_NOW_SEND_FAIL){
+    Serial.println("Not sent successfully, ACK Failure");
+    misses++;
+    Serial.print("Missed Data Points: ");
+    Serial.println(misses);
+  }
+  else{
     Serial.println("Error sending the data");
   }
   delay(500);
