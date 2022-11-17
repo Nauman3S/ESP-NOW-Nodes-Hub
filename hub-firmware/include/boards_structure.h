@@ -40,3 +40,13 @@ void printBoardsDataStructure(struct_message *sm_array)
     }
     Serial.println("**********");
 }
+
+String getBoardData(struct_message sm_board){
+    String val="{\n";
+    val=val+"MAC Address:"+sm_board.macStr+"\n";
+    val=val+"Generated Value:"+sm_board.generatedValue+"\n";
+    val=val+"Unique ID:"+sm_board.uniqueID+"\n}";
+
+    return val;
+
+}
