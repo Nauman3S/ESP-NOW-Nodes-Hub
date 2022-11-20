@@ -99,5 +99,5 @@ void loop()
   }
 
   delay(500);
-  setDeepSleep();
+  setDeepSleep(random(30, 75));
 }
